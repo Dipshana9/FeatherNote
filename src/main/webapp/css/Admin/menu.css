@@ -1,0 +1,95 @@
+/* --- MENU FORM STYLES --- */
+.content-card {
+    background-color: var(--bg-component);
+    padding: 25px;
+    border-radius: 12px;
+    margin-bottom: 30px;
+    border: 1px solid rgba(129, 78, 252, 0.1);
+}
+
+.content-card h3 {
+    margin-bottom: 20px;
+    font-size: 16px;
+    color: var(--primary-purple);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.noir-form .input-row {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.noir-form input, .noir-form select {
+    background: #12101f;
+    border: 1px solid #2d2a45;
+    color: white;
+    padding: 12px 15px;
+    border-radius: 8px;
+    flex: 1;
+    min-width: 140px;
+    outline: none;
+    transition: 0.3s;
+}
+
+.noir-form input:focus {
+    border-color: var(--primary-purple);
+    box-shadow: 0 0 8px rgba(129, 78, 252, 0.3);
+}
+
+/* --- GLOW BUTTON --- */
+.glow-btn {
+    background: linear-gradient(135deg, #814efc, #5d34c7);
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(129, 78, 252, 0.4);
+    transition: 0.3s;
+}
+
+.glow-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(129, 78, 252, 0.6);
+}
+
+/* --- TABLE EXTRA STYLES --- */
+.price-highlight {
+    color: #00c99c; /* Same green as your 'Confirmed' badge */
+    font-weight: bold;
+}
+
+.badge.discount {
+    background: rgba(129, 78, 252, 0.15);
+    color: #b392ff;
+}
+
+/* --- ACTION BUTTONS --- */
+.action-icons {
+    display: flex;
+    gap: 10px;
+}
+
+.icon-btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    transition: 0.2s;
+}
+
+.icon-btn.edit { color: #814efc; }
+.icon-btn.delete { color: #ff5e5e; }
+
+.icon-btn:hover {
+    transform: scale(1.2);
+    filter: brightness(1.2);
+}
+
+/* Ensure the table stays clean */
+.dashboard-table td {
+    vertical-align: middle;
+}

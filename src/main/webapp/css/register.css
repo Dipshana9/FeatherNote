@@ -1,0 +1,119 @@
+/* --- CSS RESET --- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+/* --- THE FULL PAGE --- */
+body {
+    display: flex; /* Centers children */
+    justify-content: center; /* Centering */
+    align-items: center; /* Centering */
+    background: radial-gradient(circle, #fcfcfc 0%, #f0f0f0 100%);
+    min-height: 100vh;
+}
+
+/* --- THE REGISTRATION CARD --- */
+.registration-container {
+    width: 100%;
+    max-width: 420px;
+    padding: 20px;
+}
+
+.registration-card {
+    background: white;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    border: 1px solid #eee;
+}
+
+/* --- LOGO & HEADER --- */
+.logo-icon i {
+    font-size: 36px;
+    color: #5d78ff; /* A clean corporate blue-purple */
+    margin-bottom: 10px;
+}
+
+.registration-header h1 {
+    font-size: 28px;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+.registration-header p {
+    color: #777;
+    margin-bottom: 30px;
+    font-size: 14px;
+}
+
+/* --- FORM FIELDS --- */
+.noir-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.form-group {
+    position: relative;
+    width: 100%;
+}
+
+.form-group i {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #888;
+    font-size: 16px;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 12px 15px 12px 45px; /* Extra padding for the icon */
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    outline: none;
+    transition: 0.3s;
+}
+
+.form-group input:focus {
+    border-color: #5d78ff;
+    box-shadow: 0 0 8px rgba(93, 120, 255, 0.1);
+}
+
+/* --- BUTTONS & FOOTER --- */
+.btn-primary {
+    background-color: #5d78ff;
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s;
+    margin-top: 10px;
+}
+
+.btn-primary:hover {
+    background-color: #455ed1;
+}
+
+.registration-footer {
+    margin-top: 25px;
+    text-align: center;
+    font-size: 14px;
+    color: #777;
+}
+
+.registration-footer a {
+    color: #5d78ff;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.registration-footer a:hover {
+    text-decoration: underline;
+}
