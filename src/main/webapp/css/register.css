@@ -1,21 +1,21 @@
-/* --- CSS RESET --- */
+/* --- register.css --- */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Segoe UI', sans-serif;
+    /* Keeping the elegant serif font for that Thai restaurant feel */
+    font-family: 'serif', 'Times New Roman', serif;
 }
 
-/* --- THE FULL PAGE --- */
 body {
-    display: flex; /* Centers children */
-    justify-content: center; /* Centering */
-    align-items: center; /* Centering */
-    background: radial-gradient(circle, #fcfcfc 0%, #f0f0f0 100%);
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    /* Warm cream background to match your home page */
+    background: #FAF4F0; 
     min-height: 100vh;
 }
 
-/* --- THE REGISTRATION CARD --- */
 .registration-container {
     width: 100%;
     max-width: 420px;
@@ -26,30 +26,34 @@ body {
     background: white;
     padding: 40px;
     border-radius: 12px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-    border: 1px solid #eee;
+    /* Soft brown shadow for depth */
+    box-shadow: 0 10px 25px rgba(93, 64, 55, 0.1);
+    /* Light pink border to match your dish cards */
+    border: 1px solid #FAD1D1;
+    text-align: center;
 }
 
-/* --- LOGO & HEADER --- */
+/* --- HEADER --- */
 .logo-icon i {
-    font-size: 36px;
-    color: #5d78ff; /* A clean corporate blue-purple */
-    margin-bottom: 10px;
+    font-size: 40px;
+    /* Solid Brown branding */
+    color: #5D4037;
+    margin-bottom: 15px;
 }
 
 .registration-header h1 {
     font-size: 28px;
-    color: #333;
-    margin-bottom: 5px;
+    color: #5D4037;
+    margin-bottom: 8px;
 }
 
 .registration-header p {
-    color: #777;
-    margin-bottom: 30px;
+    color: #8D6E63;
     font-size: 14px;
+    margin-bottom: 30px;
 }
 
-/* --- FORM FIELDS --- */
+/* --- FORM STYLING --- */
 .noir-form {
     display: flex;
     flex-direction: column;
@@ -66,54 +70,72 @@ body {
     left: 15px;
     top: 50%;
     transform: translateY(-50%);
-    color: #888;
-    font-size: 16px;
+    /* Brown icons to match the theme */
+    color: #5D4037;
 }
 
 .form-group input {
     width: 100%;
-    padding: 12px 15px 12px 45px; /* Extra padding for the icon */
-    border: 1px solid #ddd;
+    padding: 12px 15px 12px 45px;
+    /* Pink input borders */
+    border: 1.5px solid #FAD1D1;
     border-radius: 8px;
     outline: none;
+    font-size: 14px;
     transition: 0.3s;
 }
 
 .form-group input:focus {
-    border-color: #5d78ff;
-    box-shadow: 0 0 8px rgba(93, 120, 255, 0.1);
+    /* Transitions to brown on focus */
+    border-color: #5D4037;
+    box-shadow: 0 0 5px rgba(248, 187, 208, 0.3);
 }
 
-/* --- BUTTONS & FOOTER --- */
+/* --- BUTTON --- */
 .btn-primary {
-    background-color: #5d78ff;
+    /* Solid Brown button like your "Order Now" button */
+    background-color: #5D4037;
     color: white;
     border: none;
-    padding: 12px 25px;
+    padding: 14px;
     border-radius: 8px;
     font-weight: 600;
+    font-size: 16px;
     cursor: pointer;
-    transition: 0.3s;
-    margin-top: 10px;
+    transition: background 0.3s;
+    width: 100%;
 }
 
 .btn-primary:hover {
-    background-color: #455ed1;
+    background-color: #4E342E; /* Darker brown on hover */
 }
 
+/* --- FOOTER --- */
 .registration-footer {
-    margin-top: 25px;
-    text-align: center;
+    margin-top: 20px;
     font-size: 14px;
-    color: #777;
+    color: #8D6E63;
 }
 
 .registration-footer a {
-    color: #5d78ff;
+    /* Pink link to match the Logout style */
+    color: #F8BBD0;
     text-decoration: none;
     font-weight: 600;
 }
 
 .registration-footer a:hover {
+    color: #5D4037;
     text-decoration: underline;
+}
+
+/* --- ERROR STYLING --- */
+.error {
+    color: #B71C1C;
+    background: #FFEBEE; /* Light pink background for error */
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 13px;
+    margin-bottom: 15px;
+    font-weight: bold;
 }

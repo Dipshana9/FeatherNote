@@ -1,0 +1,137 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #FAF4F0; /* Warm off-white background */
+    font-family: 'serif', 'Times New Roman', serif;
+    color: #5D4037;
+}
+
+/* HEADER: Solid Brown to match image_aa8e50.png */
+.nav-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 60px;
+    background-color: #5D4037; 
+    color: white;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.nav-logo {
+    font-size: 1.8rem;
+}
+
+.nav-links {
+    display: flex;
+    gap: 30px;
+}
+
+.nav-links a {
+    color: white;
+    text-decoration: none;
+    font-size: 1.1rem;
+}
+
+.logout-link {
+    color: #F8BBD0 !important; /* The specific pink from your last image */
+}
+
+/* HERO SECTION */
+.hero-container {
+    height: 70vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.hero-content h1 {
+    font-size: 4rem;
+    font-weight: normal;
+    margin-bottom: 40px;
+}
+
+.hero-btns {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+}
+
+.btn-solid {
+    background-color: #5D4037;
+    color: white;
+    padding: 15px 40px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+.btn-outline {
+    border: 1.5px solid #5D4037;
+    color: #5D4037;
+    padding: 15px 40px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+/* RECOMMENDATIONS SECTION */
+.recommendations {
+    padding: 60px 20px;
+    text-align: center;
+}
+
+.recommendations h2 {
+    font-size: 2rem;
+    margin-bottom: 40px;
+    font-weight: normal;
+}
+
+.card-container {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
+}
+
+.dish-card {
+    background: white;
+    border: 1px solid #FAD1D1; /* Light pinkish border */
+    padding: 20px;
+    border-radius: 12px;
+    width: 280px;
+    text-align: center;
+}
+
+.dish-card img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 15px;
+}
+
+.dish-card h3 {
+    font-size: 1.3rem;
+    margin-bottom: 10px;
+}
+
+.dish-price {
+    color: #F8BBD0; /* Pink price tag */
+    font-weight: bold;
+}
+
+/* FOOTER */
+.main-footer {
+    background-color: #5D4037;
+    color: white;
+    text-align: center;
+    padding: 30px;
+    margin-top: 50px;
+}

@@ -1,101 +1,50 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Menu Management | FeatherNote</title>
-   <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Admin/menu.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-</head>
-<body>
-
-    <nav class="sidebar">
-        <div class="sidebar-header">
-            <i class="fa-solid fa-cloud-moon"></i>
-            <span>FeatherNote</span>
-        </div>
-        <ul>
-            <li>
-                <a href="dashboard.jsp">
-                    <i class="fa-solid fa-wand-magic-sparkles"></i> Dashboard
-                </a>
-            </li>
-            <li class="active">
-                <a href="menu.jsp">
-                    <i class="fa-solid fa-utensils"></i> Menu
-                </a>
-            </li>
-            <li><a href="bookings.jsp"><i class="fa-solid fa-calendar-alt"></i> Bookings</a></li>
-            <li><a href="orders.jsp"><i class="fa-solid fa-receipt"></i> Orders</a></li>
-            <li><a href="customers.jsp"><i class="fa-solid fa-users"></i> Customers</a></li>
-        </ul>
-    </nav>
-
-    <main class="main-content">
-        <header class="topbar">
-            <div>
-                <h1>The Grimoire</h1>
-                <p>Manage your menu offerings and enchantments (discounts).</p>
-            </div>
-            <div class="user-profile">
-                <i class="fa-solid fa-circle-user"></i>
-            </div>
-        </header>
-
-        <section class="form-section">
-            <div class="content-card">
-                <h3>Add New Dish</h3>
-                <form action="AddMenuController" method="POST" class="noir-form">
-                    <div class="input-row">
-                        <input type="text" name="itemName" placeholder="Dish Name" required>
-                        <input type="number" name="price" placeholder="Price (Rs.)" required>
-                        <input type="number" name="discount" placeholder="Discount %">
-                        <select name="category">
-                            <option value="Starter">Starter</option>
-                            <option value="Main Course">Main Course</option>
-                            <option value="Dessert">Dessert</option>
-                        </select>
-                        <button type="submit" class="glow-btn">Add Item</button>
-                    </div>
-                </form>
-            </div>
-        </section>
-
-        <section class="table-container">
-            <div class="table-header">
-                <h3>Current Offerings</h3>
-            </div>
+<body style="background-color: #FFF9F6; font-family: 'serif'; margin: 0; color: #5D4037;">
+    <form action="UserMenuController" method="POST">
+        <div style="text-align: center; padding: 50px;">
+            <h1 style="color: #F8BBD0; font-size: 3rem; margin-bottom: 5px;">Thai Spice Collection</h1>
+            <p style="color: #8D6E63; font-style: italic;">Authentic flavors from our kitchen to yours</p>
             
-            <table class="dashboard-table">
-                <thead>
-                    <tr>
-                        <th>Item Name</th>
-                        <th>Category</th>
-                        <th>Base Price</th>
-                        <th>Discount</th>
-                        <th>Final Price</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td class="primary-text">Midnight Truffle Pasta</td>
-                        <td>Main Course</td>
-                        <td>Rs. 450</td>
-                        <td><span class="badge discount">10%</span></td>
-                        <td class="price-highlight">Rs. 405</td>
-                        <td>
-                            <div class="action-icons">
-                                <button class="icon-btn edit"><i class="fa-solid fa-pen-to-square"></i></button>
-                                <button class="icon-btn delete"><i class="fa-solid fa-trash-can"></i></button>
-                            </div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </section>
-    </main>
+            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 25px; padding: 40px;">
+                <!-- Pad Thai Item -->
+                <div style="text-align: left; background: white; padding: 15px; border: 1px solid #F8BBD0; border-radius: 5px;">
+                    <div style="background: #EFEBE9; height: 200px; border-radius: 3px; margin-bottom: 12px;"></div>
+                    <input type="hidden" name="itemNames" value="Pad Thai">
+                    <h3 style="color: #F8BBD0; margin: 0;">Pad Thai</h3>
+                    <p style="color: #5D4037; font-weight: bold; margin: 5px 0;">Rs. 650</p>
+                    <input type="hidden" name="itemPrices" value="650">
+                    <input type="number" name="itemQuantities" value="0" min="0" oninput="calculateTotal()" style="width: 100%; border: 1px solid #D7CCC8; padding: 8px; box-sizing: border-box;">
+                </div>
 
+                <!-- Green Curry Item -->
+                <div style="text-align: left; background: white; padding: 15px; border: 1px solid #F8BBD0; border-radius: 5px;">
+                    <div style="background: #EFEBE9; height: 200px; border-radius: 3px; margin-bottom: 12px;"></div>
+                    <input type="hidden" name="itemNames" value="Green Curry">
+                    <h3 style="color: #F8BBD0; margin: 0;">Green Curry</h3>
+                    <p style="color: #5D4037; font-weight: bold; margin: 5px 0;">Rs. 750</p>
+                    <input type="hidden" name="itemPrices" value="750">
+                    <input type="number" name="itemQuantities" value="0" min="0" oninput="calculateTotal()" style="width: 100%; border: 1px solid #D7CCC8; padding: 8px; box-sizing: border-box;">
+                </div>
+            </div>
+
+            <div style="margin-top: 20px;">
+                <input type="hidden" name="totalAmount" id="hiddenTotal" value="0">
+                <button type="submit" style="background: #5D4037; color: white; border: none; padding: 15px 50px; font-weight: bold; border-radius: 30px; cursor: pointer;">
+                    View My Cart
+                </button>
+            </div>
+        </div>
+    </form>
+
+    <script>
+        function calculateTotal() {
+            let total = 0;
+            let qtys = document.getElementsByName("itemQuantities");
+            let prices = document.getElementsByName("itemPrices");
+            for (let i = 0; i < qtys.length; i++) {
+                total += (parseInt(qtys[i].value) || 0) * (parseInt(prices[i].value) || 0);
+            }
+            document.getElementById("hiddenTotal").value = total;
+        }
+    </script>
 </body>
-</html>

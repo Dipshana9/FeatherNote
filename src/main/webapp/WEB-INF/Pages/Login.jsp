@@ -1,64 +1,45 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-
+<%@ page contentType="text/html;charset=UTF-8" %>
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Login Page</title>
-
-    <!-- ✅ correct css path -->
-    <link rel="stylesheet"
-          href="<%= request.getContextPath() %>/css/Login.css">
+    <title>Login | FeatherNote</title>
+    <!-- Link to the new specific CSS file -->
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/login.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
+
 <body>
+    <!-- This container is what keeps the card in the middle of the screen -->
+    <div class="login-container">
+        <div class="login-card">
+            
+            <div class="login-header">
+                <div class="logo-icon">
+                    <i class="fa-solid fa-utensils"></i>
+                </div>
+                <h1>FeatherNote</h1>
+                <p>Enter your details to continue</p>
+            </div>
 
-<div class="container">
+            <form action="${pageContext.request.contextPath}/LoginController" method="post" class="login-form">
+                <div class="form-group">
+                    <i class="fa-solid fa-envelope"></i>
+                    <input type="email" name="email" placeholder="Email Address" required>
+                </div>
 
-    <!-- LOGIN CARD -->
-    <div class="login-box">
-        <h2>Login Now</h2>
+                <div class="form-group">
+                    <i class="fa-solid fa-lock"></i>
+                    <input type="password" name="password" placeholder="Password" required>
+                </div>
 
-        <!-- ✅ ERROR MESSAGE (NO JSTL) -->
-        <%
-            String error = (String) request.getAttribute("error");
-            if (error != null) {
-        %>
-            <p style="color:red;"><%= error %></p>
-        <%
-            }
-        %>
+                <button type="submit" class="btn-primary">Login</button>
+            </form>
 
-        <!-- ✅ FORM -->
-        <form action="<%= request.getContextPath() %>/LoginController"
-              method="post">
-
-            <input type="email" name="email"
-                   placeholder="Email" required>
-
-            <input type="password" name="password"
-                   placeholder="Password" required>
-
-            <button class="login-btn" type="submit">
-                LOGIN
-            </button>
-        </form>
-
-        <p class="signup">
-            Not a member?
-            <a href="<%= request.getContextPath() %>/RegistrationController">
-                Sign up
-            </a>
-        </p>
+            <div class="login-footer">
+                <p>Don't have an account? <a href="RegistrationController">Register here</a></p>
+            </div>
+            
+        </div>
     </div>
-
-    <!-- IMAGE SIDE -->
-    <div class="illustration">
-        <img src="<%= request.getContextPath() %>/images/Login.png"
-             alt="Login Image">
-    </div>
-
-</div>
-
 </body>
 </html>
