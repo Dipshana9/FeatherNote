@@ -1,93 +1,103 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page contentType="text/html;charset=UTF-8" %>
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Table Reservation | Thai SpiceSip</title>
+    <title>FeatherNote Thai | Book A Table</title>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/home.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/User/reservation.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
-<header class="nav-header" style="display: flex; justify-content: space-between; padding: 20px 60px; background: rgba(93, 64, 55, 0.9); color: white;">
-    <div style="font-size: 1.8rem; font-family: serif;">FeatherNote</div>
-    <nav>
-        <!-- Added Home Link -->
-        <a href="${pageContext.request.contextPath}/HomeController" style="color: white; margin-left: 20px; text-decoration: none;">Home</a>
-        
-        <a href="UserMenuController" style="color: white; margin-left: 20px; text-decoration: none;">Menu</a>
-        <a href="ReservationController" style="color: white; margin-left: 20px; text-decoration: none;">Reservations</a>
-        
-        <!-- Updated Logout to point to LogoutController for session safety -->
-        <a href="${pageContext.request.contextPath}/LoginController" style="color: #F8BBD0; margin-left: 20px; text-decoration: none;">Logout</a>
-    </nav>
-</header>
-<body style="background-color: #FFF9F6; font-family: sans-serif; color: #5D4037;">
+<body>
 
-    <!-- SUCCESS OVERLAY (Hidden by default) -->
-    <div id="resSuccess" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(255,249,246,0.98); z-index:2000; flex-direction:column; align-items:center; justify-content:center;">
-        <div style="text-align:center; padding:50px; border:2px solid #F8BBD0; background:white; border-radius:20px;">
-            <div style="font-size: 60px; color: #F8BBD0; margin-bottom: 20px;">📅</div>
-            <h1 style="font-family: serif;">Reservation Complete!</h1>
-            <p>Your table is booked. We look forward to serving you.</p>
-            <button onclick="window.location.href='${pageContext.request.contextPath}/UserMenuController'" style="margin-top:30px; background:#5D4037; color:white; border:none; padding:15px 40px; border-radius:30px; cursor:pointer;">
-                Back to Menu
-            </button>
-        </div>
-    </div>
+    <!-- HEADER -->
+    <header class="nav-header">
+        <div class="nav-logo">FeatherNote</div>
+        <nav class="nav-links">
+            <a href="${pageContext.request.contextPath}/HomeController">Home</a>
+            <a href="${pageContext.request.contextPath}/UserMenuController">Menu</a>
+            <a href="${pageContext.request.contextPath}/ReservationController">Reservations</a>
+            <a href="${pageContext.request.contextPath}/FeedbackController">Feedback</a>
+            <% if (session.getAttribute("userEmail") != null) { %>
+                <a href="${pageContext.request.contextPath}/LoginController" class="logout-link">Logout</a>
+            <% } else { %>
+                <a href="${pageContext.request.contextPath}/LoginController">Logout</a>
+            <% } %>
+        </nav>
+    </header>
 
-    <div style="max-width: 600px; margin: 50px auto; background: white; border: 1px solid #F8BBD0; padding: 40px; border-radius: 8px;">
-        <h1 style="text-align: center; color: #F8BBD0; font-family: serif;">Table Reservation</h1>
-        
-        <form id="resForm">
-            <!-- DATE AND TIME SELECTION -->
-            <div style="margin-bottom: 20px;">
-                <label style="display:block; font-weight:bold; margin-bottom: 8px;">Select Date  Time:</label>
-                <div style="display: flex; gap: 10px;">
-                    <input type="date" name="resDate" required style="flex: 2; padding: 10px; border: 1px solid #D7CCC8;">
-                    <input type="time" name="resTime" required style="flex: 1; padding: 10px; border: 1px solid #D7CCC8;">
+    <!-- RESERVATION FORM MAIN CONTENT -->
+    <main class="reservation-wrapper">
+        <div class="reservation-box">
+            <h2>Reserve Your Table</h2>
+            <p class="subtitle">Experience authentic Thai tradition wrapped in elegance</p>
+
+            <!-- Alerts for Success/Error Responses -->
+            <% if (request.getAttribute("errorMessage") != null) { %>
+                <div class="alert error-alert">
+                    <i class="fa-solid fa-triangle-exclamation"></i> <%= request.getAttribute("errorMessage") %>
                 </div>
-            </div>
+            <% } %>
+            
+            <% if (request.getAttribute("successMessage") != null) { %>
+                <div class="alert success-alert">
+                    <i class="fa-solid fa-circle-check"></i> <%= request.getAttribute("successMessage") %>
+                </div>
+            <% } %>
 
-            <div style="margin-bottom: 20px;">
-                <label style="display:block; font-weight:bold; margin-bottom: 8px;">Select Table:</label>
-                <select name="tableNo" style="width: 100%; padding: 10px; border: 1px solid #D7CCC8;">
-                    <option>Table 1 (Window View)</option>
-                    <option>Table 2 (Garden Side)</option>
-                    <option>Table 3 (Couple Booth)</option>
-                </select>
-            </div>
+            <form action="${pageContext.request.contextPath}/ReservationController" method="POST">
+                
+                <div class="form-group">
+                    <label for="tableNumber"><i class="fa-solid fa-chair"></i> Select Table</label>
+                    <select name="tableNumber" id="tableNumber" required>
+                        <option value="" disabled selected>-- Select a Table --</option>
+                        <option value="1">Table 1 (2 Persons)</option>
+                        <option value="2">Table 2 (2 Persons)</option>
+                        <option value="3">Table 3 (4 Persons)</option>
+                        <option value="4">Table 4 (4 Persons)</option>
+                        <option value="5">Table 5 (6 Persons)</option>
+                        <option value="6">Table 6 (Family Lounge)</option>
+                    </select>
+                </div>
 
-            <div style="margin-bottom: 25px;">
-                <label style="display:block; font-weight:bold; margin-bottom: 8px;">Payment Method:</label>
-                <input type="radio" name="payMethod" value="Cash" checked> Cash at Counter
-                <input type="radio" name="payMethod" value="Online" style="margin-left:20px;"> Online Payment
-            </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="resDate"><i class="fa-solid fa-calendar-days"></i> Date</label>
+                        <input type="date" name="resDate" id="resDate" required>
+                    </div>
 
-            <div style="display: flex; justify-content: space-between; font-size: 1.4rem; font-weight: bold; border-top: 1px solid #EEE; padding-top: 20px;">
-                <span>Order Total:</span>
-                <!-- Fix: Providing a fallback if total is null -->
-                <span style="color: #F8BBD0;">Rs. <%= (request.getParameter("total") != null) ? request.getParameter("total") : "0.00" %></span>
-                <input type="hidden" name="totalAmount" value="<%= request.getParameter("total") %>">
-            </div>
+                    <div class="form-group">
+                        <label for="resTime"><i class="fa-solid fa-clock"></i> Time</label>
+                        <select name="resTime" id="resTime" required>
+                            <option value="" disabled selected>-- Select Time Slot --</option>
+                            <option value="12:00:00">12:00 PM</option>
+                            <option value="13:00:00">1:00 PM</option>
+                            <option value="14:00:00">2:00 PM</option>
+                            <option value="17:00:00">5:00 PM</option>
+                            <option value="18:00:00">6:00 PM</option>
+                            <option value="19:00:00">7:00 PM</option>
+                            <option value="20:00:00">8:00 PM</option>
+                        </select>
+                    </div>
+                </div>
 
-            <button type="button" onclick="submitReservation()" style="width: 100%; background: #5D4037; color: white; border: none; padding: 18px; margin-top: 30px; border-radius: 5px; cursor: pointer; font-weight: bold;">
-                Confirm Reservation
-            </button>
-        </form>
-    </div>
+                <div class="form-group">
+                    <label for="partySize"><i class="fa-solid fa-users"></i> Number of Guests</label>
+                    <input type="number" name="partySize" id="partySize" min="1" max="15" placeholder="e.g. 3" required>
+                </div>
 
+                <button type="submit" class="btn-reserve">Confirm Reservation</button>
+            </form>
+        </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="main-footer">
+        <p>FeatherNote — Authenticity Wrapped in Elegance.</p>
+    </footer>
+
+    <!-- Minimal script to ensure users can't pick past dates -->
     <script>
-        function submitReservation() {
-            const form = document.getElementById('resForm');
-            const formData = new FormData(form);
-
-            // AJAX call to your ReservationController
-            fetch('ReservationController', {
-                method: 'POST',
-                body: new URLSearchParams(formData)
-            })
-            .then(response => {
-                // Show the "Reservation Complete" message
-                document.getElementById('resSuccess').style.display = 'flex';
-            })
-            .catch(err => alert("Error processing reservation."));
-        }
+        document.getElementById('resDate').min = new Date().toISOString().split("T")[0];
     </script>
 </body>
 </html>

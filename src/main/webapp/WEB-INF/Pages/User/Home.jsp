@@ -13,12 +13,13 @@
         <div class="nav-logo">FeatherNote</div>
         <nav class="nav-links">
             <a href="${pageContext.request.contextPath}/HomeController">Home</a>
-            <a href="${pageContext.request.contextPath}/UserMenuController">Menu</a>
+            <a href="${pageContext.request.contextPath}/MenuController">Menu</a>
             <a href="${pageContext.request.contextPath}/ReservationController">Reservations</a>
+            <a href="${pageContext.request.contextPath}/FeedbackController">Feedback</a>
             <% if (session.getAttribute("userEmail") != null) { %>
                 <a href="${pageContext.request.contextPath}/LoginController" class="logout-link">Logout</a>
             <% } else { %>
-                <a href="${pageContext.request.contextPath}/LoginController">Login</a>
+                <a href="${pageContext.request.contextPath}/LoginController">Logout</a>
             <% } %>
         </nav>
     </header>
@@ -40,22 +41,44 @@
         <div class="card-container">
             <!-- Pad Thai -->
             <div class="dish-card">
-                <img src="https://images.unsplash.com/photo-1559339352-11d035aa65de?q=80&w=400" alt="Pad Thai">
+                <div class="img-wrapper">
+                    <img src="https://i1-c.pinimg.com/1200x/86/36/0d/86360d6aa83b4570417451bcb4d03350.jpg" alt="Pad Thai">
+                </div>
                 <h3>Classic Pad Thai</h3>
                 <p class="dish-price">Rs. 1200</p>
             </div>
             <!-- Green Curry -->
             <div class="dish-card">
-                <img src="https://images.unsplash.com/photo-1455619452474-d2be8b1e70cd?q=80&w=400" alt="Green Curry">
+                <div class="img-wrapper">
+                    <img src="https://i1-c.pinimg.com/webp/1200x/33/10/82/331082ea71ec4572013572316482f4ea.webp" alt="Green Curry">
+                </div>
                 <h3>Green Curry</h3>
                 <p class="dish-price">Rs. 1500</p>
             </div>
             <!-- Tom Yum -->
             <div class="dish-card">
-                <img src="https://images.unsplash.com/photo-1562607394-5abc0c346ad2?q=80&w=400" alt="Tom Yum">
+                <div class="img-wrapper">
+                    <img src="https://i1-c.pinimg.com/webp/1200x/c9/28/5f/c9285f6cea90c7d15589744e4785342b.webp" alt="Tom Yum">
+                </div>
                 <h3>Tom Yum Goong</h3>
                 <p class="dish-price">Rs. 1100</p>
             </div>
+        </div>
+    </section>
+
+    <!-- ABOUT US SECTION -->
+    <section class="about-us">
+        <div class="about-content">
+            <h2>Our Story</h2>
+            <p>
+                Welcome to <strong>FeatherNote Thai</strong>, where culinary tradition meets elegant modern dining. 
+                Our journey began with a simple passion: to serve authentic, vibrant Thai heritage flavors 
+                crafted from the finest locally sourced ingredients and traditional spices.
+            </p>
+            <p>
+                From our kitchen to your table, every dish represents a careful balance of sweet, sour, salty, and spicy elements. 
+                Whether you are joining us for an intimate dinner or ordering a cozy meal home, we promise an exceptional experience wrapped in elegance.
+            </p>
         </div>
     </section>
 

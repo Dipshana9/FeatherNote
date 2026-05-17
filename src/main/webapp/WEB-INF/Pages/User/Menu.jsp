@@ -1,101 +1,229 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Feather Note | Menu</title>
+    <meta charset="UTF-8">
+    <title>FeatherNote - Menu</title>
+    <link rel="stylesheet" href="cssx/style.css">
+    <style>
+        :root {
+            --brown: #5D4037;
+            --soft-pink: #FCE4EC;
+            --white: #FFF9FB;
+            --deep-pink: #F8BBD0;
+        }
+
+        body {
+            background-color: var(--white);
+            font-family: 'Segoe UI', sans-serif;
+            margin: 0;
+            color: var(--brown);
+        }
+
+        header {
+            background-color: var(--brown);
+            color: white;
+            padding: 15px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo { font-size: 24px; font-weight: bold; }
+        nav a { color: white; text-decoration: none; margin-left: 20px; font-size: 14px; }
+
+        .menu-container {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 30px;
+            background-color: var(--soft-pink);
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .menu-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid rgba(93, 64, 55, 0.1);
+        }
+
+        .qty-input {
+            width: 50px;
+            padding: 5px;
+            border: 1px solid var(--brown);
+            border-radius: 4px;
+        }
+
+        .delivery-option {
+            margin: 20px 0;
+            padding: 15px;
+            border: 2px dashed var(--brown);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .footer-cart {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: var(--brown);
+            color: white;
+            border-radius: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .btn-checkout {
+            background-color: var(--deep-pink);
+            color: var(--brown);
+            border: none;
+            padding: 12px 25px;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background-color: var(--white);
+            width: 350px;
+            margin: 15% auto;
+            padding: 25px;
+            border-radius: 10px;
+            border: 3px solid var(--brown);
+        }
+
+        .modal-content input {
+            width: 90%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid var(--brown);
+            border-radius: 5px;
+        }
+
+        .btn-save {
+            background-color: var(--brown);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            width: 100%;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+    </style>
 </head>
-<body style="background-color: #FFF9F6; font-family: 'serif', 'Times New Roman'; margin: 0; color: #5D4037;">
-<header class="nav-header" style="display: flex; justify-content: space-between; padding: 20px 60px; background: rgba(93, 64, 55, 0.9); color: white;">
-    <div style="font-size: 1.8rem; font-family: serif;">FeatherNote</div>
+<body>
+
+<header>
+    <div class="logo">FeatherNote</div>
     <nav>
-        <!-- Added Home Link -->
-        <a href="${pageContext.request.contextPath}/HomeController" style="color: white; margin-left: 20px; text-decoration: none;">Home</a>
-        
-        <a href="UserMenuController" style="color: white; margin-left: 20px; text-decoration: none;">Menu</a>
-        <a href="ReservationController" style="color: white; margin-left: 20px; text-decoration: none;">Reservations</a>
-        
-        <!-- Updated Logout to point to LogoutController for session safety -->
-        <a href="${pageContext.request.contextPath}/LoginController" style="color: #F8BBD0; margin-left: 20px; text-decoration: none;">Logout</a>
+        <a href="HomeController">Home</a>
+        <a href="MenuController">Menu</a>
+        <a href="ReservationController">Reservations</a>
+        <a href="FeedbackController">Feedback</a>
+        <a href="LogoutController">Logout</a>
     </nav>
 </header>
-    <form action="UserMenuController" method="POST">
-        <div style="text-align: center; padding: 50px;">
-            <h1 style="color: #F8BBD0; font-size: 3.5rem; margin-bottom: 10px;">Feather Note </h1>
-            <p style="color: #8D6E63; font-style: italic; font-size: 1.2rem;">Authentic flavors for you</p>
-            
-            <!-- FOOD SECTION -->
-            <h2 style="color: #F8BBD0; margin-top: 50px; border-bottom: 2px solid #F8BBD033; display: inline-block; padding: 0 20px;">Main Entrees</h2>
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 25px; padding: 30px 60px;">
-                
-                <!-- Pad Thai -->
-                <div style="text-align: left; background: white; padding: 20px; border: 1px solid #F8BBD0; border-radius: 8px;">
-                    <div style="background: #EFEBE9; height: 180px; border-radius: 5px; margin-bottom: 15px;"></div>
-                    <input type="hidden" name="itemNames" value="Pad Thai">
-                    <h3 style="color: #F8BBD0; margin: 0; font-size: 1.5rem;">Pad Thai</h3>
-                    <p style="color: #5D4037; font-weight: bold; margin: 8px 0;">Rs. 650</p>
-                    <input type="hidden" name="itemPrices" value="650">
-                    <input type="number" name="itemQuantities" value="0" min="0" oninput="calculateTotal()" 
-                           style="width: 100%; border: 1px solid #D7CCC8; padding: 10px; border-radius: 4px;">
-                </div>
 
-                <!-- Green Curry -->
-                <div style="text-align: left; background: white; padding: 20px; border: 1px solid #F8BBD0; border-radius: 8px;">
-                    <div style="background: #EFEBE9; height: 180px; border-radius: 5px; margin-bottom: 15px;"></div>
-                    <input type="hidden" name="itemNames" value="Green Curry">
-                    <h3 style="color: #F8BBD0; margin: 0; font-size: 1.5rem;">Green Curry</h3>
-                    <p style="color: #5D4037; font-weight: bold; margin: 8px 0;">Rs. 750</p>
-                    <input type="hidden" name="itemPrices" value="750">
-                    <input type="number" name="itemQuantities" value="0" min="0" oninput="calculateTotal()" 
-                           style="width: 100%; border: 1px solid #D7CCC8; padding: 10px; border-radius: 4px;">
-                </div>
+<div class="menu-container">
+    <h2 style="text-align:center">Feather Menu</h2>
 
-                <!-- Tom Yum -->
-                <div style="text-align: left; background: white; padding: 20px; border: 1px solid #F8BBD0; border-radius: 8px;">
-                    <div style="background: #EFEBE9; height: 180px; border-radius: 5px; margin-bottom: 15px;"></div>
-                    <input type="hidden" name="itemNames" value="Tom Yum Soup">
-                    <h3 style="color: #F8BBD0; margin: 0; font-size: 1.5rem;">Tom Yum Soup</h3>
-                    <p style="color: #5D4037; font-weight: bold; margin: 8px 0;">Rs. 800</p>
-                    <input type="hidden" name="itemPrices" value="800">
-                    <input type="number" name="itemQuantities" value="0" min="0" oninput="calculateTotal()" 
-                           style="width: 100%; border: 1px solid #D7CCC8; padding: 10px; border-radius: 4px;">
-                </div>
-            </div>
+    <div class="menu-item">
+        <span><b>Pad Thai</b> ($12)</span>
+        <input type="number" class="qty" data-price="12" value="0" min="0" onchange="updateTotal()">
+    </div>
+    <div class="menu-item">
+        <span><b>Green Curry</b> ($14)</span>
+        <input type="number" class="qty" data-price="14" value="0" min="0" onchange="updateTotal()">
+    </div>
+    <div class="menu-item">
+        <span><b>Tom Yum</b> ($10)</span>
+        <input type="number" class="qty" data-price="10" value="0" min="0" onchange="updateTotal()">
+    </div>
+    <div class="menu-item">
+        <span><b>Spring Rolls</b> ($6)</span>
+        <input type="number" class="qty" data-price="6" value="0" min="0" onchange="updateTotal()">
+    </div>
+    <div class="menu-item">
+        <span><b>Mango Sticky Rice</b> ($7)</span>
+        <input type="number" class="qty" data-price="7" value="0" min="0" onchange="updateTotal()">
+    </div>
 
-            <!-- BEVERAGE SECTION -->
-            <h2 style="color: #F8BBD0; margin-top: 30px; border-bottom: 2px solid #F8BBD033; display: inline-block; padding: 0 20px;">Beverages</h2>
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 25px; padding: 30px 60px;">
-                <div style="text-align: left; background: white; padding: 20px; border: 1px solid #F8BBD0; border-radius: 8px;">
-                    <div style="background: #EFEBE9; height: 180px; border-radius: 5px; margin-bottom: 15px;"></div>
-                    <input type="hidden" name="itemNames" value="Thai Iced Tea">
-                    <h3 style="color: #F8BBD0; margin: 0;">Thai Iced Tea</h3>
-                    <p style="color: #5D4037; font-weight: bold; margin: 8px 0;">Rs. 250</p>
-                    <input type="hidden" name="itemPrices" value="250">
-                    <input type="number" name="itemQuantities" value="0" min="0" oninput="calculateTotal()" 
-                           style="width: 100%; border: 1px solid #D7CCC8; padding: 10px; border-radius: 4px;">
-                </div>
-            </div>
+    <div class="delivery-option">
+        <input type="checkbox" id="deliveryCheck" onclick="toggleDelivery()">
+        <label for="deliveryCheck"><b>Opt for Home Delivery?</b></label>
+    </div>
 
-            <div style="margin-top: 50px; background: white; display: inline-block; padding: 20px 40px; border: 1px solid #F8BBD0; border-radius: 50px;">
-                <span style="font-size: 1.2rem; margin-right: 20px;">Estimated Total: <b>Rs. <span id="displayTotal">0</span></b></span>
-                <input type="hidden" name="totalAmount" id="hiddenTotal" value="0">
-                <button type="submit" style="background: #5D4037; color: white; border: none; padding: 15px 40px; font-weight: bold; border-radius: 30px; cursor: pointer;">
-                    View My Cart
-                </button>
-            </div>
-        </div>
-    </form>
+    <div class="footer-cart">
+        <div>Total: <b>$<span id="grandTotal">0.00</span></b></div>
+        <button class="btn-checkout" onclick="handleCheckout()">Place Order</button>
+    </div>
+</div>
 
-    <script>
-        function calculateTotal() {
-            let total = 0;
-            let qtys = document.getElementsByName("itemQuantities");
-            let prices = document.getElementsByName("itemPrices");
-            for (let i = 0; i < qtys.length; i++) {
-                total += (parseInt(qtys[i].value) || 0) * (parseInt(prices[i].value) || 0);
-            }
-            document.getElementById("hiddenTotal").value = total;
-            document.getElementById("displayTotal").innerText = total;
+<div id="deliveryModal" class="modal">
+    <div class="modal-content">
+        <h3 style="margin-top:0">Delivery Details</h3>
+        <input type="text" id="address" placeholder="Enter Full Address">
+        <input type="text" id="phone" placeholder="Enter Phone Number">
+        <button class="btn-save" onclick="closeModal()">Save and  Continue</button>
+    </div>
+</div>
+
+<script>
+    function updateTotal() {
+        let total = 0;
+        document.querySelectorAll('.qty').forEach(input => {
+            total += (parseInt(input.value) || 0) * parseFloat(input.getAttribute('data-price'));
+        });
+        document.getElementById('grandTotal').innerText = total.toFixed(2);
+    }
+
+    function toggleDelivery() {
+        if (document.getElementById('deliveryCheck').checked) {
+            document.getElementById('deliveryModal').style.display = 'block';
         }
-    </script>
+    }
+
+    function closeModal() {
+        const addr = document.getElementById('address').value;
+        const ph = document.getElementById('phone').value;
+        if (addr && ph) {
+            document.getElementById('deliveryModal').style.display = 'none';
+        } else {
+            alert("Please fill in delivery info!");
+        }
+    }
+
+    function handleCheckout() {
+        const total = parseFloat(document.getElementById('grandTotal').innerText);
+        if (total <= 0) {
+            alert("Your cart is empty!");
+            return;
+        }
+
+        if (document.getElementById('deliveryCheck').checked) {
+            const addr = document.getElementById('address').value;
+            if (!addr) {
+                document.getElementById('deliveryModal').style.display = 'block';
+                return;
+            }
+        }
+
+        alert("Payment Completed! Your order is being processed.");
+        location.reload(); // Resets the page
+    }
+</script>
+
 </body>
 </html>

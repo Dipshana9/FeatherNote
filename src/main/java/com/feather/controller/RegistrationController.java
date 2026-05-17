@@ -1,7 +1,6 @@
 package com.feather.controller;
 
 import com.feather.config.dbConfig;
-
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -21,9 +20,7 @@ public class RegistrationController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-        request.getRequestDispatcher("/WEB-INF/Pages/Registration.jsp")
-               .forward(request, response);
+        request.getRequestDispatcher("/WEB-INF/Pages/Registration.jsp").forward(request, response);
     }
 
     @Override
@@ -35,54 +32,49 @@ public class RegistrationController extends HttpServlet {
         String password = request.getParameter("password");
         String confirmPassword = request.getParameter("confirmPassword");
 
-        // ✅ 1. Validation
-        if (!password.equals(confirmPassword)) {
-            request.setAttribute("error", "Passwords do not match");
+        // 1. Check if passwords match
+        if (password == null || !password.equals(confirmPassword)) {
+            request.setAttribute("error", "Passwords do not match!");
             doGet(request, response);
             return;
         }
 
         try {
-            // ✅ 2. CREATE DbConfig OBJECT HERE
             dbConfig db = new dbConfig();
             Connection con = db.getConnection();
 
-            // ✅ 3. Check if email already exists
-            String checkSql = "SELECT Email FROM user WHERE Email = ?";
+            // 2. DUPLICATE CHECK: Look for existing email
+            String checkSql = "SELECT email FROM users WHERE email = ?";
             PreparedStatement checkPs = con.prepareStatement(checkSql);
             checkPs.setString(1, email);
             ResultSet rs = checkPs.executeQuery();
 
             if (rs.next()) {
-                request.setAttribute("error", "Email already registered");
+                // If this runs, it means the email was found in the 'users' table
+                request.setAttribute("error", "An account with this email already exists!");
                 doGet(request, response);
                 con.close();
                 return;
             }
 
-            // ✅ 4. Insert new user
-            String insertSql =
-                "INSERT INTO user (UserName, Email, Password) VALUES (?, ?, ?)";
+            // 3. INSERTION: If code reaches here, the email is unique
+            // Using your table structure: name, email, password, role
+            String insertSql = "INSERT INTO users (name, email, password, role) VALUES (?, ?, ?, 'USER')";
             PreparedStatement ps = con.prepareStatement(insertSql);
             ps.setString(1, username);
             ps.setString(2, email);
-            ps.setString(3, password); // hash later
+            ps.setString(3, password); 
 
             ps.executeUpdate();
-
             con.close();
 
-            // ✅ 5. Success message
-            request.getSession().setAttribute(
-                "success",
-                "Registration successful. Please login."
-            );
-
+            // 4. Redirect to login on success
+            request.getSession().setAttribute("success", "Account created! You can now login.");
             response.sendRedirect(request.getContextPath() + "/LoginController");
 
         } catch (Exception e) {
             e.printStackTrace();
-            request.setAttribute("error", "Database error");
+            request.setAttribute("error", "Database error: " + e.getMessage());
             doGet(request, response);
         }
     }

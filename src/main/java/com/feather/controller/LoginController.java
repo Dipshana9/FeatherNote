@@ -18,20 +18,12 @@ public class LoginController extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
 
-    /**
-     * SHOW LOGIN PAGE
-     * Serves the Login.jsp file located in protected WEB-INF folder.
-     */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         request.getRequestDispatcher("/WEB-INF/Pages/Login.jsp").forward(request, response);
     }
 
-    /**
-     * PROCESS LOGIN DATA
-     * Handles authentication and role-based routing.
-     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -40,48 +32,50 @@ public class LoginController extends HttpServlet {
         String password = request.getParameter("password");
 
         try {
-            // Establish Database Connection
             dbConfig db = new dbConfig();
             Connection con = db.getConnection();
 
-            // SQL to check credentials
-            String sql = "SELECT * FROM user WHERE Email = ? AND Password = ?";
-            PreparedStatement ps = con.prepareStatement(sql);
+            // 1. First, check if the email exists in the 'users' table
+            String emailCheckSql = "SELECT * FROM users WHERE email = ?";
+            PreparedStatement ps = con.prepareStatement(emailCheckSql);
             ps.setString(1, email);
-            ps.setString(2, password);
-
             ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
-                // LOGIN SUCCESS: Create Session
-                HttpSession session = request.getSession();
-                session.setAttribute("userEmail", rs.getString("Email"));
-                session.setAttribute("userName", rs.getString("UserName"));
+                // Email exists, now check if the password matches
+                String dbPassword = rs.getString("password");
+                
+                if (dbPassword.equals(password)) {
+                    // SUCCESS: Login verified
+                    HttpSession session = request.getSession();
+                    session.setAttribute("userEmail", rs.getString("email"));
+                    session.setAttribute("userName", rs.getString("name"));
+                    session.setAttribute("userRole", rs.getString("role"));
 
-                con.close();
+                    con.close();
 
-                // --- ROLE-BASED REDIRECTION ---
-                // Specifically check for your admin email
-                if ("featheradmin@gmail.com".equalsIgnoreCase(email)) {
-                    // Set admin role for security checks on other pages
-                    session.setAttribute("userRole", "admin");
-                    
-                    // Redirect to Admin Dashboard Controller
-                    response.sendRedirect(request.getContextPath() + "/AdminDashboardController");
+                    // 2. Routing Logic
+                    // Check if email contains "FAdmin" (Case insensitive)
+                    if (email.toLowerCase().contains("fadmin")) {
+                        response.sendRedirect(request.getContextPath() + "/AdminDashboardController");
+                    } else {
+                        response.sendRedirect(request.getContextPath() + "/HomeController");
+                    }
+
                 } else {
-                    // Standard user role
-                    session.setAttribute("userRole", "user");
-                    
-                    // Redirect to User Dashboard Controller
-                    response.sendRedirect(request.getContextPath() + "/HomeController");
+                    // Password does not match
+                    request.setAttribute("error", "Wrong password! Please try again.");
+                    request.setAttribute("showForgot", true); // Trigger forgot password link
+                    doGet(request, response);
                 }
-
             } else {
-                // LOGIN FAILED: Return to login with error
-                request.setAttribute("error", "Invalid email or password");
-                if (con != null) con.close();
+                // Email does not exist
+                request.setAttribute("error", "This email is not registered. Please register instead.");
+                request.setAttribute("showRegister", true); // Highlight register link
                 doGet(request, response);
             }
+
+            if (con != null) con.close();
 
         } catch (Exception e) {
             e.printStackTrace();
